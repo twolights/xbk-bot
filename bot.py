@@ -44,7 +44,7 @@ def handle_message(event):
     text = message.text.strip()
     if not text == 'bot stats':
         return
-    hash_key = 'GROUP_%s' % GROUP_ID
+    hash_key = 'GROUP_%s_PREVIOUS' % GROUP_ID
     summary = '昨日厭世貼圖統計：\n'
     for sticker in STICKERS_TO_COUNT:
         count = redis_client.hget(hash_key, sticker['id'])
@@ -61,7 +61,7 @@ def handle_sticker(event):
         return
     hash_key = 'GROUP_%s' % GROUP_ID
     redis_client.hincrby(hash_key, sticker_id)
-    app.logger.info('Sticker ID = ' + sticker_id)
+    app.logger.info('Sticker#' + sticker_id + ' counted')
 
 if __name__ == "__main__":
     app.run()
