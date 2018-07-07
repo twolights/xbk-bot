@@ -64,4 +64,4 @@ def handle_sticker(event):
     app.logger.info('Sticker#' + sticker_id + ' counted')
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')

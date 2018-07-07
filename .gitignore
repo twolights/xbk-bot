@@ -1,2 +1,3 @@
 env
 .bot.env
+.bot-env.bash
