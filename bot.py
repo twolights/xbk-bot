@@ -27,7 +27,11 @@ redis_client = redis.StrictRedis(
     port=int(os.environ['REDIS_PORT'])
 )
 
-@app.route("/b9d0f6b86be604eb/callback", methods=['POST'])
+@app.route('/', methods=['GET'])
+def index():
+    return 'OK'
+
+@app.route('/b9d0f6b86be604eb/callback', methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
     body = request.get_data(as_text=True)
