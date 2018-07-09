@@ -42,25 +42,36 @@ def callback():
         abort(400)
     return 'OK'
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    message = event.message
-    text = message.text.strip()
-    if not text == 'bot stats':
-        return
-    hash_key = 'GROUP_%s_PREVIOUS' % GROUP_ID
-    summary = '昨日厭世貼圖統計：\n'
+def summarize_stickers(hash_key):
+    summary = ''
     for sticker in STICKERS_TO_COUNT:
         count = redis_client.hget(hash_key, sticker['id'])
         if count is None:
             count = 0
         summary += '%s - %d 次\n' % (sticker['name'], int(count))
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=summary))
+    return summary
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    message = event.message
+    text = message.text.strip()
+    summary = None
+    if text == 'bot stats':
+        summary = '昨日厭世貼圖統計：\n'
+        hash_key = 'GROUP_%s_PREVIOUS' % GROUP_ID
+    if text == 'bot today':
+        summary = '本日厭世貼圖統計：\n'
+        hash_key = 'GROUP_%s' % GROUP_ID
+
+    if summary is not None:
+        summary += summarize_stickers(hash_key)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=summary))
 
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker(event):
     message = event.message
     sticker_id = message.sticker_id
+    # app.logger.info('Sticker#' + sticker_id)
     if sticker_id not in STICKERS_ID_TO_COUNT:
         return
     hash_key = 'GROUP_%s' % GROUP_ID
