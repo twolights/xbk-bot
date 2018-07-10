@@ -62,10 +62,12 @@ def handle_message(event):
     if text == 'bot today':
         summary = '本日厭世貼圖統計：\n'
         hash_key = 'GROUP_%s' % GROUP_ID
-
     if summary is not None:
         summary += summarize_stickers(hash_key)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=summary))
+
+    if u'馮世寬' in text:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='超過 100 分！'))
 
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker(event):
