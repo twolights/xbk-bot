@@ -3,7 +3,7 @@ from flask import Flask, request, abort
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, StickerMessage, TextMessage, TextSendMessage
+from linebot.models import ImageSendMessage, MessageEvent, StickerMessage, TextMessage, TextSendMessage
 
 import redis
 import os
@@ -68,6 +68,22 @@ def handle_message(event):
 
     if u'馮世寬' in text:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='超過 100 分！'))
+    elif u'咩咩' in text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            ImageSendMessage(
+                original_content_url='https://storage.googleapis.com/evanchen/temp/batmap-slaps-robin.jpg',
+                preview_image_url='https://storage.googleapis.com/evanchen/temp/batmap-slaps-robin.jpg'
+            )
+        )
+    elif u'陳經理' in text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            ImageSendMessage(
+                original_content_url='https://storage.googleapis.com/evanchen/temp/cayenne.jpg',
+                preview_image_url='https://storage.googleapis.com/evanchen/temp/cayenne.jpg'
+            )
+        )
 
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker(event):
