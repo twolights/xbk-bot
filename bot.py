@@ -80,8 +80,8 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
-                original_content_url='https://storage.googleapis.com/evanchen/temp/cayenne.jpg',
-                preview_image_url='https://storage.googleapis.com/evanchen/temp/cayenne.jpg'
+                original_content_url='https://storage.googleapis.com/evanchen/temp/cayenne-2.jpg',
+                preview_image_url='https://storage.googleapis.com/evanchen/temp/cayenne-2.jpg'
             )
         )
 
