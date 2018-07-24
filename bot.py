@@ -76,6 +76,14 @@ def handle_message(event):
                 preview_image_url='https://storage.googleapis.com/evanchen/temp/batmap-slaps-robin.jpg'
             )
         )
+    elif u'啊啊啊' in text or u'阿阿阿' in text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            ImageSendMessage(
+                original_content_url='https://storage.googleapis.com/evanchen/temp/van-gogh-the-scream.jpg',
+                preview_image_url='https://storage.googleapis.com/evanchen/temp/van-gogh-the-scream.jpg'
+            )
+        )
     elif u'陳經理' in text:
         line_bot_api.reply_message(
             event.reply_token,
